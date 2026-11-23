@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
-"""Entrypoint for news-image-20261122.
+"""Entrypoint for news-image-20261122 (round-3 radical build).
 
 Copies the committed entry.png (drawn by draw.py, the build tool) into the
 output directory after verifying it is a real PNG/JPEG within the 1 MiB cap.
 Stdlib only, plain direct write, exit 0 on success. The image shows one day —
-Sunday 22 November 2026: 38 dated stories, 7 regions, 15 illustrated.
+Sunday 22 November 2026: 20 dated stories, 7 regions, 11 illustrated, every
+story drawn at poster scale so it reads at thumbnail size.
 """
 import os
 import shutil
@@ -16,6 +17,9 @@ MAX_BYTES = 1024 * 1024  # 1 MiB competition cap
 
 
 def main() -> int:
+    # Round-3 note: the deliverable is the single committed page image;
+    # verification below is deliberately strict (magic bytes + size cap)
+    # so a corrupt or oversized render can never be shipped silently.
     with open(SRC, "rb") as fh:
         head = fh.read(8)
     size = os.path.getsize(SRC)
